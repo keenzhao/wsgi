@@ -60,6 +60,11 @@ def to():
     return redirect('http://www.163.com')
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', e=e), 404
+
+
 if __name__ == '__main__':
     # manager.run()
     app.run(debug=True, port=8080)

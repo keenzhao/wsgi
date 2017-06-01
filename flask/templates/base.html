@@ -1,0 +1,19 @@
+<html>
+<head>
+    {% block head %}
+    <title>{% block title %}block测试{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    hhh
+    <hr>
+{% endblock %}
+</body>
+</html>
+<!--
+    解释：
+    block标签定义的元素可在衍生模板中修改。
+    上面定义了名为head、title和body的块。注意，title包含在head中。
+    见衍生模板的例子extendsdemo.html
+-->

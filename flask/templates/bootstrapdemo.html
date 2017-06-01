@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+{% import 'macros.html' as macros %}
+{% block title %}Flask集成bootstrap（模板继承）{% endblock %}
+{% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                        data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Flask集成bootstrap技术测试页面</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Product</a></li>
+                    <li><a href="/">jinja2 Template</a></li>
+                    <li><a href="/">SqlAlchemy</a></li>
+                    <li><a href="/">WebForm</a></li>
+                    <li><a href="/">NoSql</a></li>
+                    <li><a href="/">Pythonic</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <p>模板宏（函数）的使用，传入的列表序列处理：</p>
+            <ul>
+                {% for comment in comments %}
+                    {{ macros.render_comment(comment) }}
+                {% endfor %}
+            </ul>
+            {%  include 'includedemo.html' %}
+            <h1>Hello, {{ name }}!</h1>
+            {%  include 'includedemo.html' %}
+        </div>
+    </div>
+{% endblock %}

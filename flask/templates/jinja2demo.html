@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .test {
+            color: red
+        }
+    </style>
+    <title>复杂模板演示</title>
+</head>
+<body>
+{% if user=='keen' %}
+<h1>hello,{{ user}}</h1>
+{% else %}
+<h1>hello,test!</h1>
+{% endif%}
+<br>
+{{ listtest[5] }}
+<br>
+
+{% macro render_comment(comment) %}
+<li>{{comment}}</li>
+{% endmacro %}
+<ul>
+    {% for item in listtest%}
+        <li class="test">{{item}}</li>
+    {% endfor %}
+
+    <!-- 调用宏 -->
+    {% for item in list2 %}
+        {{ render_comment(item) }}
+    {% endfor %}
+</ul>
+</body>
+</html>

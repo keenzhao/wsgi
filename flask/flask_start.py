@@ -9,10 +9,26 @@ from flask import render_template
 from flask import request
 from flask_bootstrap import Bootstrap
 from flask_script import Manager
+from flask_moment import Moment
+from datetime import datetime
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+
+
+# 表单类 一个简单的Web 表单，包含一个文本字段和一个提交按钮
+class NameForm(FlaskForm):
+    name = StringField('输入测试数据?', validators=[DataRequired()])
+    submit = SubmitField('提交')
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hard to guess string'
+
 bootstrap = Bootstrap(app)
 manager = Manager(app)
+moment = Moment(app)
 
 
 @app.route('/')
@@ -20,6 +36,16 @@ def index():
     user_agent = request.headers.get('User-Agent')
     # return '<h3>you browser is %s</h3>' % user_agent
     return render_template('index.html', user_agent=user_agent)
+
+
+@app.route('/forms', methods=['GET', 'POST'])
+def forms_demo():
+    name = None
+    form = NameForm()
+    if form.validate_on_submit():
+        name = form.name.data
+    form.name.data = ''
+    return render_template('formsdemo.html', form=form, name=name)
 
 
 @app.route('/super')
@@ -32,7 +58,8 @@ def test(name):
     comments = ['python', 'java', 'C#', 'C++', 'Php', 'R', 'Ruby']
     return render_template('bootstrapdemo.html',
                            name=name,
-                           comments=comments)
+                           comments=comments,
+                           current_time=datetime.utcnow())
 
 
 @app.route('/user/<string:name>')

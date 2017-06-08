@@ -6,7 +6,7 @@ from flask import Flask
 from flask import make_response
 from flask import redirect
 from flask import render_template
-from flask import request
+from flask import request, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_script import Manager
 from flask_moment import Moment
@@ -48,6 +48,20 @@ def forms_demo():
     return render_template('formsdemo.html', form=form, name=name)
 
 
+@app.route('/redirect', methods=['POST', 'GET'])
+def redirect_forms():
+    form = NameForm()
+
+    if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('看上去你已经改变了你的名字！名字数据从【'+old_name+"】改变到【"+form.name.data+"】")
+        session['name'] = form.name.data
+        return redirect(url_for('redirect_forms'))
+
+    return render_template('formsdemo.html', form=form, name=session.get('name'))
+
+
 @app.route('/super')
 def super():
     return render_template('extendsdemo.html')
@@ -82,7 +96,7 @@ def login():
     return response
 
 
-@app.route('/redirect')
+@app.route('/redirect163')
 def to():
     return redirect('http://www.163.com')
 

@@ -3,6 +3,8 @@
     <words>
       <w>appliction</w>
       <w>bootstrapdemo</w>
+      <w>sqlalchemy</w>
+      <w>tablename</w>
       <w>wsgi</w>
     </words>
   </dictionary>
